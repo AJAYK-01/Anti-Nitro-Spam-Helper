@@ -1,0 +1,18 @@
+{
+  "name": "nitro-filter-helper",
+  "version": "1.0.0",
+  "description": "A bot that deletes an admin marked spam message and its copies across channels. Targetted at those Free Nitro Spam that comes across channels and is a pain to manually delete one by one.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.14"
+  }
+}
