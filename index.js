@@ -15,6 +15,9 @@ client.on("messageCreate", (msg) => {
 
     if (msg.content == "spam" && msg.type == "REPLY") {
 
+        // to not mess up with other server's channels at the same time
+        let guildId = msg.guildId;
+
         try {
             // only allowing admins to mark spam
             if (msg.member.permissions.has([Permissions.FLAGS.KICK_MEMBER])) {
@@ -29,18 +32,21 @@ client.on("messageCreate", (msg) => {
                     for (const channelObj of channels) {
                         channelId = channelObj[0];
 
-                        channel = client.channels.resolve(channelId)
-                        if (channel.isText()) {
-                            cache = client.channels.cache.get(channelId)
-                            cache.messages.fetch({ limit: 40 }).then(
-                                async msg => {
-                                    msg.each(messg => {
-                                        if (messg.content == spamMsg) {
-                                            messg.delete();
-                                        }
-                                    })
-                                }
-                            )
+                        // check if the channel is in the same server
+                        if (channelObj[1].guildId == guildId) {
+                            channel = client.channels.resolve(channelId)
+                            if (channel.isText()) {
+                                cache = client.channels.cache.get(channelId)
+                                cache.messages.fetch({ limit: 40 }).then(
+                                    async msg => {
+                                        msg.each(messg => {
+                                            if (messg.content == spamMsg) {
+                                                messg.delete();
+                                            }
+                                        })
+                                    }
+                                )
+                            }
                         }
                     }
                 });
