@@ -32,6 +32,7 @@ client.on("messageCreate", (msg) => {
                     for (const channelObj of channels) {
                         channelId = channelObj[0];
 
+
                         // check if the channel is in the same server
                         if (channelObj[1].guildId == guildId) {
                             channel = client.channels.resolve(channelId)
@@ -45,7 +46,9 @@ client.on("messageCreate", (msg) => {
                                             }
                                         })
                                     }
-                                )
+                                ).catch(err => {
+                                    console.log("private channel probably" + err)
+                                })
                             }
                         }
                     }
